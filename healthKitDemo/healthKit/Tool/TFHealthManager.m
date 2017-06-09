@@ -7,7 +7,7 @@
 //
 
 #import "TFHealthManager.h"
-#import <HealthKit/HealthKit.h>
+
 
 #import "NSDate+TFDate.h"
 
@@ -41,7 +41,13 @@ static TFHealthManager *_healthManager = nil;
     
     return [HKHealthStore isHealthDataAvailable];
 }
-
++ (BOOL)TF_isAuthorizationStatusForType:(HKObjectType *)type {
+    HKAuthorizationStatus  authorizationType = [[TFHealthManager TF_standardHealthManager].healthStore authorizationStatusForType:type];
+    if (authorizationType == HKAuthorizationStatusSharingDenied) {
+        return NO;
+    }
+    return YES;
+}
 + (void)TF_authorizeHealthKitWithType:(TFQuantityType)type result:(void(^)(BOOL isAuthorizateSuccess ,NSError *error))resultBlock {
     NSMutableSet *readSet = [NSMutableSet set];
     if (type & TFQuantityTypeStep) {
@@ -78,14 +84,15 @@ static TFHealthManager *_healthManager = nil;
     if (type & TFQuantityTypeBloodPressureDiastolic) {
        [readSet addObject:[HKObjectType quantityTypeForIdentifier:HKQuantityTypeIdentifierBloodPressureDiastolic]];
     }
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
+   
+//    static dispatch_once_t onceToken;
+//    dispatch_once(&onceToken, ^{
         [[TFHealthManager TF_standardHealthManager].healthStore requestAuthorizationToShareTypes:readSet readTypes:readSet completion:^(BOOL success, NSError * _Nullable error) {
             if (resultBlock) {
                 resultBlock(success , error);
             }
         }];
-    });
+//    });
     
 }
 #pragma mark -- 获取的数据一天中所有的步数
@@ -379,7 +386,7 @@ static TFHealthManager *_healthManager = nil;
                               type:(HKQuantityType *)quantityType
                   queryResultBlock:(void (^)(NSArray *queryResults))queryResultBlock {
     NSPredicate *predicate              = [HKQuery predicateForSamplesWithStartDate:startDate endDate:endDate options:HKQueryOptionStrictStartDate];
-    NSUInteger op                       = HKStatisticsOptionCumulativeSum;
+    NSUInteger op                       = HKStatisticsOptionCumulativeSum | HKStatisticsOptionNone;
     HKStatisticsCollectionQuery  *query = [[HKStatisticsCollectionQuery alloc] initWithQuantityType:quantityType quantitySamplePredicate:predicate options:op anchorDate:startDate intervalComponents:hComponents];
     query.initialResultsHandler         = ^(HKStatisticsCollectionQuery *query, HKStatisticsCollection * __nullable result, NSError * __nullable error) {
         if (error){
@@ -467,11 +474,11 @@ static TFHealthManager *_healthManager = nil;
         unit = [HKUnit gramUnit];
     }
     if (type == TFQuantityTypeActiveEnergyBurned) {
-        quantityType =[HKObjectType quantityTypeForIdentifier:HKQuantityTypeIdentifierBasalEnergyBurned];
+        quantityType =[HKObjectType quantityTypeForIdentifier:HKQuantityTypeIdentifierActiveEnergyBurned];
         unit = [HKUnit kilocalorieUnit];
     }
     if (type == TFQuantityTypeBasalEnergyBurned) {
-         quantityType = [HKObjectType quantityTypeForIdentifier:HKQuantityTypeIdentifierActiveEnergyBurned];
+         quantityType = [HKObjectType quantityTypeForIdentifier:HKQuantityTypeIdentifierBasalEnergyBurned];
         unit = [HKUnit kilocalorieUnit];
     }
     if (type == TFQuantityTypeBloodGlucose) {
@@ -491,7 +498,7 @@ static TFHealthManager *_healthManager = nil;
     }
     HKQuantity *quantity    = [HKQuantity quantityWithUnit:unit doubleValue:number];
     HKQuantitySample *quantitySample = [HKQuantitySample quantitySampleWithType:quantityType quantity:quantity startDate:startDate endDate:endDate];
-    [[TFHealthManager TF_standardHealthManager].healthStore saveObject:quantitySample  withCompletion:^(bool success, NSError *error){
+    [[TFHealthManager TF_standardHealthManager].healthStore saveObject:quantitySample withCompletion:^(BOOL success, NSError * _Nullable error) {
         block(success, error);
     }];
     

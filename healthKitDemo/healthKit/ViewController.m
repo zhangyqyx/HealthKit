@@ -7,38 +7,53 @@
 //
 
 #import "ViewController.h"
-#import "TFHealthManager.h"
-#import "NSDate+TFDate.h"
 
-@interface ViewController ()
+#import "HealthKitDetailViewController.h"
+
+@interface ViewController ()<UITableViewDelegate , UITableViewDataSource>
+
+/**数据列表 */
+@property (nonatomic , strong)NSArray *list;
 
 @end
 
 @implementation ViewController
 
+- (NSArray *)list {
+    if (!_list) {
+        _list = @[@"TFQuantityTypeStep",
+                  @"TFQuantityTypeWalking",
+                  @"TFQuantityTypeCycling",
+                  @"TFQuantityTypeSwimming",
+                  @"TFQuantityTypeHeight",
+                  @"TFQuantityTypeBodyMass",
+                  @"TFQuantityTypeActiveEnergyBurned",
+                  @"TFQuantityTypeBasalEnergyBurned",
+                  @"TFQuantityTypeBloodGlucose",
+                  @"TFQuantityTypeBloodPressureSystolic",
+                  @"TFQuantityTypeBloodPressureDiastolic"];
+    }
+    return _list;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-   
+    [self setupUI];
+    
+    
+}
+
+- (void)setupUI {
+    UITableView *tableView = [[UITableView alloc] init];
+    tableView.delegate = self;
+    tableView.dataSource = self;
+    tableView.rowHeight = 50;
+    tableView.frame = self.view.frame;
+    [self.view addSubview:tableView];
 }
 
 - (IBAction)authorizeHealth:(id)sender {
-    if ([TFHealthManager TF_isHealthDataAvailable]) {
-        [TFHealthManager TF_authorizeHealthKitWithType:
-         TFQuantityTypeStep |
-         TFQuantityTypeWalking|
-         TFQuantityTypeCycling |
-         TFQuantityTypeSwimming|
-         TFQuantityTypeHeight|
-         TFQuantityTypeBodyMass|
-         TFQuantityTypeActiveEnergyBurned|
-         TFQuantityTypeBasalEnergyBurned |
-         TFQuantityTypeBloodGlucose      |
-         TFQuantityTypeBloodPressureSystolic|
-         TFQuantityTypeBloodPressureDiastolic
-                                                result:^(BOOL isAuthorizateSuccess, NSError *error) {
-            NSLog(@" success = %d,error =  %@" , isAuthorizateSuccess , error);
-        }];
-    }
+
 //    [TFHealthManager TF_fetchAllHealthType:TFHealthIntervalUnitMonth queryResultBlock:^(NSArray *queryResults) {
 //        for (NSDictionary *dic in queryResults) {
 //            NSLog(@"----startDate = %@" ,dic[@"startDate"]);
@@ -48,22 +63,16 @@
 //    }];
     
     
-//    [TFHealthManager TF_fetchAllHealthDataByDay:^(NSArray *modelArray) {
-//        for (NSDictionary *dic in modelArray) {
-//            NSLog(@"----startDate = %@" ,dic[@"startDate"]);
-//            NSLog(@"----endDate = %@" , dic[@"endDate"]);
-//            NSLog(@"----count = %@" , dic[@"stepCount"]);
-//        }
-//    }];
+   
 //     [TFHealthManager TF_getAllStepCount:^(NSUInteger stepCount) {
 //         NSLog(@"%lu" , (unsigned long)stepCount);
 //     }];
 //    [TFHealthManager TF_getStepCountWithHourOf0ClockBlock:^(NSArray *queryResults) {
 //        NSLog(@"%@" , queryResults);
 //    }];
-     [TFHealthManager TF_getDayHealthWithType:TFQuantityTypeBloodPressureDiastolic queryResultBlock:^(NSArray *queryResults) {
-         NSLog(@"%@" , queryResults);
-     }];
+//     [TFHealthManager TF_getDayHealthWithType:TFQuantityTypeBloodPressureDiastolic queryResultBlock:^(NSArray *queryResults) {
+//         NSLog(@"%@" , queryResults);
+//     }];
 //    NSDate *endDate         = [NSDate TF_getCurrentDate];
 //    NSDate *startDate       = [NSDate TF_dateAfterDate:endDate day:-1];
 //    //必须都加入收缩压和舒张压，健康数据才会有显示，但是提前最好判断一下数值范围
@@ -74,10 +83,23 @@
 //        NSLog(@"%d" ,isSuccess);
 //    }];
 }
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+#pragma mark --UITableViewDelegate
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.list.count;
 }
-
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    if (!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+    }
+    cell.textLabel.text = self.list[indexPath.row];
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    return cell;
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    HealthKitDetailViewController *nextVc = [[HealthKitDetailViewController alloc] init];
+    nextVc.type = self.list[indexPath.row];
+    [self.navigationController pushViewController:nextVc animated:YES];
+}
 
 @end

@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <HealthKit/HealthKit.h>
 
 typedef NS_ENUM(NSUInteger , TFQuantityType){
    TFQuantityTypeStep                   = 1 << 0, //步行
@@ -41,6 +42,15 @@ typedef NS_ENUM(NSUInteger, TFHealthIntervalUnit) {
  *  @return YES 支持  NO 不支持
  */
 + (BOOL)TF_isHealthDataAvailable;
+
+/**
+ 判断是否授权分享数据
+ @param type 设备类型
+ @return 是否授权
+ */
++ (BOOL)TF_isAuthorizationStatusForType:(HKObjectType *)type;
+
+
 /**
  应用授权
  @param type 授权类型
@@ -109,10 +119,5 @@ typedef NS_ENUM(NSUInteger, TFHealthIntervalUnit) {
                        startDate:(NSDate *)startDate
                          endDate:(NSDate *)endDate
                           number:(CGFloat)number
-                         success:(void(^)(bool isSuccess , NSError *error))block;
-
-
-
-
-
+                         success:(void(^)(BOOL isSuccess , NSError *error))block;
 @end

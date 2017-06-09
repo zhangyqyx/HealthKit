@@ -16,6 +16,8 @@
 		9F6EEA031ED276460016CB6E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F6EEA011ED276460016CB6E /* LaunchScreen.storyboard */; };
 		9F6EEA0C1ED2785F0016CB6E /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F6EEA0B1ED2785F0016CB6E /* HealthKit.framework */; };
 		9F6EEA161ED2D29A0016CB6E /* TFHealthManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F6EEA151ED2D29A0016CB6E /* TFHealthManager.m */; };
+		9F7822841EEA3B820085E2B6 /* HealthKitDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7822821EEA3B820085E2B6 /* HealthKitDetailViewController.m */; };
+		9F7822851EEA3B820085E2B6 /* HealthKitDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F7822831EEA3B820085E2B6 /* HealthKitDetailViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +37,9 @@
 		9F6EEA0D1ED2785F0016CB6E /* healthKit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = healthKit.entitlements; sourceTree = "<group>"; };
 		9F6EEA141ED2D29A0016CB6E /* TFHealthManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHealthManager.h; sourceTree = "<group>"; };
 		9F6EEA151ED2D29A0016CB6E /* TFHealthManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFHealthManager.m; sourceTree = "<group>"; };
+		9F7822811EEA3B820085E2B6 /* HealthKitDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HealthKitDetailViewController.h; sourceTree = "<group>"; };
+		9F7822821EEA3B820085E2B6 /* HealthKitDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HealthKitDetailViewController.m; sourceTree = "<group>"; };
+		9F7822831EEA3B820085E2B6 /* HealthKitDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HealthKitDetailViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +89,9 @@
 				9F6EE9F71ED276460016CB6E /* AppDelegate.m */,
 				9F6EE9F91ED276460016CB6E /* ViewController.h */,
 				9F6EE9FA1ED276460016CB6E /* ViewController.m */,
+				9F7822811EEA3B820085E2B6 /* HealthKitDetailViewController.h */,
+				9F7822821EEA3B820085E2B6 /* HealthKitDetailViewController.m */,
+				9F7822831EEA3B820085E2B6 /* HealthKitDetailViewController.xib */,
 				9F6EE9FC1ED276460016CB6E /* Main.storyboard */,
 				9F6EE9FF1ED276460016CB6E /* Assets.xcassets */,
 				9F6EEA011ED276460016CB6E /* LaunchScreen.storyboard */,
@@ -185,6 +193,7 @@
 			files = (
 				9F6EEA031ED276460016CB6E /* LaunchScreen.storyboard in Resources */,
 				9F6EEA001ED276460016CB6E /* Assets.xcassets in Resources */,
+				9F7822851EEA3B820085E2B6 /* HealthKitDetailViewController.xib in Resources */,
 				9F6EE9FE1ED276460016CB6E /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -198,6 +207,7 @@
 			files = (
 				9F6EE9FB1ED276460016CB6E /* ViewController.m in Sources */,
 				9F6EE9F81ED276460016CB6E /* AppDelegate.m in Sources */,
+				9F7822841EEA3B820085E2B6 /* HealthKitDetailViewController.m in Sources */,
 				9F6EE9F51ED276460016CB6E /* main.m in Sources */,
 				9F5610DC1ED5836D00000FF3 /* NSDate+TFDate.m in Sources */,
 				9F6EEA161ED2D29A0016CB6E /* TFHealthManager.m in Sources */,
