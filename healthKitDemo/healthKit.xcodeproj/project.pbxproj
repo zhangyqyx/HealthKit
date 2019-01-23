@@ -158,7 +158,7 @@
 				TargetAttributes = {
 					9F6EE9EF1ED276460016CB6E = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = ER26K66B7Q;
+						DevelopmentTeam = 48J8UJB93W;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.HealthKit = {
@@ -331,7 +331,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = healthKit/healthKit.entitlements;
-				DEVELOPMENT_TEAM = ER26K66B7Q;
+				DEVELOPMENT_TEAM = 48J8UJB93W;
 				INFOPLIST_FILE = healthKit/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -345,7 +345,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = healthKit/healthKit.entitlements;
-				DEVELOPMENT_TEAM = ER26K66B7Q;
+				DEVELOPMENT_TEAM = 48J8UJB93W;
 				INFOPLIST_FILE = healthKit/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
